@@ -4,11 +4,11 @@ import { InjectModel, Model, Document, ScanResponse } from 'nestjs-dynamoose';
 import { User, UserKey } from './interface/user.interface';
 
 // DOMAIN
-import { Domain } from '@/constant/domain';
+import { Domain } from '../constant/domain';
 
 // INTERFACE
-import { BaseService } from '@/base/base.service';
-import { PaginationRequest } from '@/base/base.interface';
+import { BaseService } from '../base/base.service';
+import { PaginationRequest } from '../base/base.interface';
 
 @Injectable()
 export class UserService implements BaseService<User> {

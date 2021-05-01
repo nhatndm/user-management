@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 
 // BASE
-import { PaginationRequest } from '@/base/base.interface';
+import { PaginationRequest } from '../../base/base.interface';
 
 export class CreateUserDto {
   @IsNotEmpty()

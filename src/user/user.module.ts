@@ -3,7 +3,7 @@ import { DynamooseModule } from 'nestjs-dynamoose';
 import { UserSchema } from './user.schema';
 
 // CONSTANT
-import { Domain } from '@/constant/domain';
+import { Domain } from '../constant/domain';
 
 // SERVICE
 import { UserService } from './user.service';

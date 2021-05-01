@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 // BASE
-import { BasePrimaryKey } from '@/base/base.interface';
+import { BasePrimaryKey } from '../../base/base.interface';
 
 export interface UserKey extends BasePrimaryKey {}
 

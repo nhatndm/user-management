@@ -4,14 +4,14 @@ import { Document, ScanResponse } from 'nestjs-dynamoose';
 // import * as faker from 'faker';
 
 // BASE
-import { BaseController } from '@/base/base.controller';
-import { IResponse, BasePrimaryKey } from '@/base/base.interface';
+import { BaseController } from '../base/base.controller';
+import { IResponse, BasePrimaryKey } from '../base/base.interface';
 
 // SERVICE
 import { UserService } from './user.service';
 
 // CONSTANT
-import { Domain } from '@/constant/domain';
+import { Domain } from '../constant/domain';
 
 // ENTITY
 import { User } from './interface/user.interface';

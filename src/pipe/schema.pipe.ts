@@ -11,7 +11,7 @@ import { validate, ValidationError } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
 // RESPONSE
-import { IResponse } from '@/base/base.interface';
+import { IResponse } from '../base/base.interface';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
