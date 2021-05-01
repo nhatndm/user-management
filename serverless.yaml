@@ -1,0 +1,32 @@
+service:
+  name: user-management
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-plugin-warmup
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  stage: prod
+  region: ap-southeast-1
+
+package:
+  individually: true
+
+functions:
+  index: # The name of the lambda function
+    # The module 'handler' is exported in the file 'src/lambda'
+    handler: src/lambda.handler
+    events:
+      - http:
+          cors: true
+          path: /{any+}
+          method: any
+
+custom:
+  warmup:
+    enabled: true
+  optimize:
+    external: ['swagger-ui-dist']
