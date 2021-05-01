@@ -9,9 +9,9 @@ import { DynamooseModule } from 'nestjs-dynamoose';
     }),
     DynamooseModule.forRoot({
       aws: {
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_ACCESS_SECRET_KEY,
-        region: process.env.AWS_REGION,
+        accessKeyId: process.env.ENV_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.ENV_AWS_ACCESS_SECRET_KEY,
+        region: process.env.ENV_AWS_REGION,
       },
     }),
   ],
