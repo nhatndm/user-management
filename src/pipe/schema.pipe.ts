@@ -15,9 +15,12 @@ import { IResponse } from '../base/base.interface';
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
+  result = {};
+
   async transform(value: any, { metatype }: ArgumentMetadata) {
     const object = plainToClass(metatype, value);
     const errors = await validate(object);
+    this.result = {};
 
     if (errors.length > 0) {
       const data: IResponse<string> = {
@@ -32,14 +35,20 @@ export class ValidationPipe implements PipeTransform<any> {
   }
 
   private buildError(errors: ValidationError[]): Record<string, string> {
-    const result = {};
     errors.forEach(el => {
       const prop = el.property;
-      Object.entries(el.constraints).forEach(constraint => {
-        result[prop + constraint[0]] = `${constraint[1]}`;
-      });
+
+      if (el.children) {
+        this.buildError(el.children);
+      }
+
+      if (el.constraints) {
+        Object.entries(el.constraints).forEach(constraint => {
+          this.result[prop + constraint[0]] = `${constraint[1]}`;
+        });
+      }
     });
 
-    return result;
+    return this.result;
   }
 }

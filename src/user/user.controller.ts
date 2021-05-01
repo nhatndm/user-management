@@ -1,6 +1,6 @@
 import { Controller, Body, Post, Put, Get, Param } from '@nestjs/common';
 import * as uuid from 'uuid';
-import { Document, ScanResponse } from 'nestjs-dynamoose';
+import { Document, QueryResponse, ScanResponse } from 'nestjs-dynamoose';
 // import * as faker from 'faker';
 
 // BASE
@@ -20,7 +20,7 @@ import { User } from './interface/user.interface';
 import {
   CreateUserDto,
   UpdateUserDto,
-  PaginationFilterUserDto,
+  FilterAllUserDto,
 } from './interface/user.dto';
 
 @Controller(Domain.USER.toLowerCase())
@@ -89,8 +89,10 @@ export class UserController implements BaseController<User> {
 
   @Post('/find/all')
   async getAll(
-    @Body() filterUser: PaginationFilterUserDto,
-  ): Promise<IResponse<ScanResponse<Document<User>>>> {
+    @Body() filterUser: FilterAllUserDto,
+  ): Promise<
+    IResponse<QueryResponse<Document<User>> | ScanResponse<Document<User>>>
+  > {
     const foundUser = await this.userService.findAll(filterUser);
 
     return {

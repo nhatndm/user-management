@@ -7,9 +7,15 @@ export const UserSchema = new Schema({
   },
   name: {
     type: String,
+    index: {
+      name: 'nameIndex',
+    },
   },
   email: {
     type: String,
+    index: {
+      name: 'emailIndex',
+    },
   },
   phone: {
     type: Number,
