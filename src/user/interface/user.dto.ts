@@ -5,7 +5,11 @@ import {
   IsEmail,
   IsString,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
+
+// BASE
+import { PaginationRequest } from '@/base/base.interface';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -33,7 +37,7 @@ export class UpdateUserDto {
 
   @IsOptional()
   @IsNumber()
-  number?: number;
+  phone?: number;
 
   @IsOptional()
   @IsString()
@@ -41,7 +45,7 @@ export class UpdateUserDto {
   name: string;
 }
 
-export class FilterAllUserDto {
+class FilterAllUserDto {
   @IsOptional()
   @IsString()
   id?: string;
@@ -52,10 +56,17 @@ export class FilterAllUserDto {
 
   @IsOptional()
   @IsNumber()
-  number?: number;
+  phone?: number;
 
   @IsOptional()
   @IsString()
   @MinLength(3)
   name: string;
+}
+
+export class PaginationFilterUserDto extends PaginationRequest<
+  FilterAllUserDto
+> {
+  @ValidateNested()
+  entity?: FilterAllUserDto;
 }

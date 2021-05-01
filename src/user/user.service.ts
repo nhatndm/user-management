@@ -8,6 +8,7 @@ import { Domain } from '@/constant/domain';
 
 // INTERFACE
 import { BaseService } from '@/base/base.service';
+import { PaginationRequest } from '@/base/base.interface';
 
 @Injectable()
 export class UserService implements BaseService<User> {
@@ -28,25 +29,38 @@ export class UserService implements BaseService<User> {
     return this.userModel.get(key);
   }
 
-  findAll(user: Partial<User>): Promise<ScanResponse<Document<User>>> {
+  findAll(
+    user: PaginationRequest<Partial<User>>,
+  ): Promise<ScanResponse<Document<User>>> {
     const userCondition = new Condition();
 
-    if (user.id) {
-      userCondition.where('id').eq(user.id);
+    if (user.entity && user.entity.id) {
+      userCondition.where('id').eq(user.entity.id);
     }
 
-    if (user.email) {
-      userCondition.where('email').eq(user.email);
+    if (user.entity && user.entity.email) {
+      userCondition.where('email').eq(user.entity.email);
     }
 
-    if (user.name) {
-      userCondition.where('name').contains(user.name);
+    if (user.entity && user.entity.name) {
+      userCondition.where('name').contains(user.entity.name);
     }
 
-    if (user.phone) {
-      userCondition.where('phone').eq(user.phone);
+    if (user.entity && user.entity.phone) {
+      userCondition.where('phone').eq(user.entity.phone);
     }
 
-    return this.userModel.scan(userCondition).exec();
+    if (user.last_key) {
+      return this.userModel
+        .scan(userCondition)
+        .startAt({ id: user.last_key })
+        .limit(user.limit)
+        .exec();
+    }
+
+    return this.userModel
+      .scan(userCondition)
+      .limit(user.limit)
+      .exec();
   }
 }

@@ -1,6 +1,7 @@
 import { Controller, Body, Post, Put, Get, Param } from '@nestjs/common';
 import * as uuid from 'uuid';
 import { Document, ScanResponse } from 'nestjs-dynamoose';
+// import * as faker from 'faker';
 
 // BASE
 import { BaseController } from '@/base/base.controller';
@@ -19,7 +20,7 @@ import { User } from './interface/user.interface';
 import {
   CreateUserDto,
   UpdateUserDto,
-  FilterAllUserDto,
+  PaginationFilterUserDto,
 } from './interface/user.dto';
 
 @Controller(Domain.USER.toLowerCase())
@@ -52,6 +53,30 @@ export class UserController implements BaseController<User> {
     };
   }
 
+  // @Get('/create-fake')
+  // async createFakeData(): Promise<any> {
+  //   const promiseList: Promise<any>[] = [];
+
+  //   for (let i = 0; i < 1000; i++) {
+  //     const user = {
+  //       id: uuid.v4(),
+  //       name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+  //       email: faker.internet.email(),
+  //       phone: Number(faker.phone.phoneNumber('##########')),
+  //     };
+
+  //     promiseList.push(this.userService.create(user));
+  //   }
+
+  //   Promise.all(promiseList)
+  //     .then(() => console.log('done'))
+  //     .catch(e => console.log(e));
+
+  //   return {
+  //     code: 200,
+  //   };
+  // }
+
   @Get('/:id')
   async getOneById(@Param() params: BasePrimaryKey): Promise<IResponse<User>> {
     const foundUser = await this.userService.findOne({ id: params.id });
@@ -64,7 +89,7 @@ export class UserController implements BaseController<User> {
 
   @Post('/find/all')
   async getAll(
-    @Body() filterUser: FilterAllUserDto,
+    @Body() filterUser: PaginationFilterUserDto,
   ): Promise<IResponse<ScanResponse<Document<User>>>> {
     const foundUser = await this.userService.findAll(filterUser);
 
